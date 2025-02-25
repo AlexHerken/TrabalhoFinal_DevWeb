@@ -65,3 +65,57 @@ form.addEventListener('submit', async (event) => {
         console.error(error);
     }
 });
+
+async function carregarAtividades() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "atividades"));
+        resumo.innerHTML = "";
+        
+        console.log("Atividades carregadas do Firebase:", querySnapshot.size);
+        if (querySnapshot.empty) {
+            resumo.innerHTML = "Nenhuma atividade cadastrada.";
+            return;
+        }
+
+        querySnapshot.forEach((doc) => {
+            const atividade = doc.data();
+            console.log("Atividade encontrada:", atividade);
+            
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <strong>Descrição:</strong> ${atividade.descricao}<br>
+                <strong>Categoria:</strong> ${atividade.categoria}<br>
+                <strong>Tipo:</strong> ${atividade.tipo}<br>
+                <strong>Horas:</strong> ${atividade.horas}<br>
+                <hr>
+            `;
+            resumo.appendChild(div);
+        });
+    } catch (error) {
+        console.error("Erro ao carregar atividades:", error);
+        resumo.innerHTML = "Erro ao carregar atividades.";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", carregarAtividades);
+
+
+botaoResumo.addEventListener('click', async () => {
+    try {
+        const querySnapshot = await getDocs(collection(db, "atividades"));
+        let resumoTexto = "Resumo das Atividades:\n";
+        
+        if (querySnapshot.empty) {
+            resumoTexto += "Nenhuma atividade cadastrada.";
+        } else {
+            querySnapshot.forEach((doc) => {
+                const atividade = doc.data();
+                resumoTexto += `\nDescrição: ${atividade.descricao}\nCategoria: ${atividade.categoria}\nTipo: ${atividade.tipo}\nHoras: ${atividade.horas}\n------------------`;
+            });
+        }
+        alert(resumoTexto);
+    } catch (error) {
+        console.error("Erro ao mostrar resumo:", error);
+        alert("Erro ao carregar resumo das atividades.");
+    }
+});
