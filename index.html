@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lançamento de Horas Complementares</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script type="module">
+        // Importando Firebase
+          // Import the functions you need from the SDKs you need
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+          import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+          import { getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+          
+          const firebaseConfig = {
+              apiKey: "AIzaSyAT_wpMtXSpNA9YFzE8aM_IZ7VTvftQmGo",
+              authDomain: "devwebproject-28699.firebaseapp.com",
+              projectId: "devwebproject-28699",
+              storageBucket: "devwebproject-28699.appspot.com", 
+              messagingSenderId: "79582308460",
+              appId: "1:79582308460:web:7f9f329a1794426e269049",
+              measurementId: "G-N916KC3QBV"
+          };
+          
+          const app = initializeApp(firebaseConfig);
+          const db = getFirestore(app);
+      
+        // Tornando acessível globalmente
+        window.db = db;
+        window.addDoc = addDoc;
+        window.collection = collection;
+        window.getDocs = getDocs;
+      </script>
+
+</head>
+
+
+
+<body onload="atualizarOpcoesTipo()">
+
+
+    <div class="container">
+        <h1>Lançamento de Horas Complementares</h1>
+        <form id="horasForm">
+            <div class="form-group">
+                <label for="descricao">Descrição da Atividade:</label>
+                <input type="text" id="descricao" name="descricao" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoria da Atividade:</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="Ensino">Ensino</option>
+                    <option value="Extensão">Extensão</option>
+                    <option value="Pesquisa">Pesquisa</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo"> :</label>
+                <select id="tipo" name="tipo" required></select>
+            </div>
+
+            <div class="form-group">
+                <label for="horas">Total de Horas da Atividade:</label>
+                <input type="number" id="horas" name="horas" min="1" required>
+            </div>
+
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <div id="resultados">
+            <h2>Resumo de Horas</h2>
+            <div id="resumo"></div>
+            <button id="botaoResumo" onclick="mostrarResumo()">Mostrar Resumo</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Created by Alex Herken</p>
+    </footer>
+
+    <script src="/javascript/script.js"></script>
+      
+</body>
+</html>
